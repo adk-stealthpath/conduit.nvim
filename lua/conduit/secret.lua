@@ -6,33 +6,37 @@ local M = {}
 -- and returns the resulting table
 function M.get_secret(field, context, callback)
     local secret_tbl = util.resolve(field, context)
-    local result = vim.system(
+    vim.system(
         {"kubectl", "--context", context, "get", "secret", "-n", secret_tbl.namespace, secret_tbl.name, "-o", "jsonpath={.data}"},
         {text = true},
         function(result)
-            if result.code ~= 0 then
-                vim.notify("conduit: " .. (result.stderr or "unknown error"), vim.log.levels.ERROR)
-                return
-            end
-            -- got result. do stuff
-            local retval = {}
-
-            local raw_secret = vim.fn.json_decode(result.stdout)
-            if raw_secret[secret_tbl.pass_key] ~= nil then
-                retval[secret_tbl.pass_key] = vim.base64.decode(raw_secret[secret_tbl.pass_key])
-            else
-                vim.notify("conduit: secret does not have given pass_key - " .. secret_tbl.pass_key, vim.log.levels.ERROR)
-            end
-
-            if secret_tbl.user_key ~= nil then
-                if raw_secret[secret_tbl.user_key] ~= nil then
-                    retval[secret_tbl.user_key] = vim.base64.decode(raw_secret[secret_tbl.user_key])
-                else
-                    vim.notify("conduit: secret does not have given user_key - " .. secret_tbl.user_key, vim.log.levels.WARN)
+            vim.schedule(function()
+                if result.code ~= 0 then
+                    vim.notify("conduit: " .. (result.stderr or "unknown error"), vim.log.levels.ERROR)
+                    return
                 end
-            end
+                -- got result. do stuff
+                local retval = {}
 
-            callback(retval)
+                local raw_secret = vim.fn.json_decode(result.stdout)
+                if raw_secret[secret_tbl.pass_key] ~= nil then
+                    retval[secret_tbl.pass_key] = vim.base64.decode(raw_secret[secret_tbl.pass_key])
+                else
+                    vim.notify("conduit: secret does not have given pass_key - " .. secret_tbl.pass_key, vim.log.levels.ERROR)
+                end
+
+                if secret_tbl.user_key ~= nil then
+                    if raw_secret[secret_tbl.user_key] ~= nil then
+                        retval[secret_tbl.user_key] = vim.base64.decode(raw_secret[secret_tbl.user_key])
+                    else
+                        vim.notify("conduit: secret does not have given user_key - " .. secret_tbl.user_key, vim.log.levels.WARN)
+                    end
+                end
+
+                callback(retval)
+            end)
         end
     )
 end
+
+return M

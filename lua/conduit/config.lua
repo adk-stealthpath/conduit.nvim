@@ -19,7 +19,7 @@ local function is_empty_table(value)
 end
 
 function M.apply(config)
-    assert(not is_empty_table(config.datasources),"conduit: no datasources configured") 
+    assert(not is_empty_table(config.datasources),"conduit: no datasources configured")
 
     local errs = {}
 
@@ -64,21 +64,21 @@ function M.apply(config)
                 table.insert(errs, prefix .. ": secret.namespace must be a non-empty string")
             end
 
-            if type(ds.secret.user_key) ~= "string" or ds.pod_selector.user_key == "" then
+            if type(ds.secret.user_key) ~= "string" or ds.secret.user_key == "" then
                 table.insert(errs, prefix .. ": secret.user_key must be a non-empty string")
             end
 
-            if type(ds.secret.pass_key) ~= "string" or ds.pod_selector.pass_key == "" then
+            if type(ds.secret.pass_key) ~= "string" or ds.secret.pass_key == "" then
                 table.insert(errs, prefix .. ": secret.pass_key must be a non-empty string")
             end
-        end 
+        end
 
 
         if type(ds.filetype) ~= "string" or ds.filetype == "" then
             table.insert(errs, prefix .. ": filetype must be a non-empty string (hint: filetype = 'sql')")
         end
 
-        if ds.vars ~= nil and execIsValid then 
+        if ds.vars ~= nil and execIsValid then
             if next(ds.vars) == nil then
                 table.insert(errs, prefix .. ": vars must either be nil or a non-empty table")
             else
@@ -87,7 +87,11 @@ function M.apply(config)
                         table.insert(errs, prefix .. ": vars is missing expected value " .. key)
                     end
                 end)
-            end 
+            end
+
+            if ds.shell_exec and not ds.exec:find("{{query}}") then
+              table.insert(errs, prefix .. ": shell_exec = true requires {{query}} in exec template")
+            end
         end
     end
 
