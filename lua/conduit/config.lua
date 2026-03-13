@@ -1,25 +1,31 @@
 local M = {}
 
 local default_config = {
-  timeout = 30,
-  keymaps = {
-    open  = "<leader>co",
-    run   = "<leader>cr",
-    clear = "<leader>cc",
-  },
-  kubeconfig = vim.fn.expand("~/.kube/config"),
-  datasources = {},
+    timeout = 30,
+    keymaps = {
+        open         = "<leader>co",
+        run          = "<leader>cr",
+        clear        = "<leader>cc",
+        save         = "<leader>cs",
+        save_and_run = "<leader>cw",
+        load         = "<leader>cl",
+        new          = "<leader>cn",
+    },
+    kubeconfig = vim.fn.expand("~/.kube/config"),
+    datasources = {},
+    layout = "bottom", -- can be "right"
+    query_dir = vim.fn.stdpath("data") .. "/conduit/queries",
 }
 
 local function is_empty_table(value)
-  if value == nil then
-    return true
-  end
-  return next(value) == nil
+    if value == nil then
+        return true
+    end
+    return next(value) == nil
 end
 
 function M.apply(config)
-    assert(not is_empty_table(config.datasources),"conduit: no datasources configured")
+    assert(not is_empty_table(config.datasources), "conduit: no datasources configured")
 
     local errs = {}
 
@@ -31,7 +37,9 @@ function M.apply(config)
 
         local execIsValid = true
         if type(ds.exec) ~= "string" or ds.exec == "" then
-            table.insert(errs, prefix .. ": exec must be a non-empty string (hint: exec = 'psql postgres://{{username}}:{{password}}@localhost:{{port}}/{{db}}')")
+            table.insert(errs,
+                prefix ..
+                ": exec must be a non-empty string (hint: exec = 'psql postgres://{{username}}:{{password}}@localhost:{{port}}/{{db}}')")
             execIsValid = false
         end
 
@@ -90,7 +98,7 @@ function M.apply(config)
             end
 
             if ds.shell_exec and not ds.exec:find("{{query}}") then
-              table.insert(errs, prefix .. ": shell_exec = true requires {{query}} in exec template")
+                table.insert(errs, prefix .. ": shell_exec = true requires {{query}} in exec template")
             end
         end
     end

@@ -44,7 +44,7 @@ function M.open(config)
                             actions.select_default:replace(function()
                                 actions.close(prompt_buf2)
                                 local name = astate.get_selected_entry()[1]
-                                buffer.open(config.datasources[name], ctx, config.keymaps)
+                                buffer.open(config.datasources[name], name, ctx, config)
                             end)
                             return true
                         end,
