@@ -72,7 +72,7 @@ function M.apply(config)
                 table.insert(errs, prefix .. ": secret.namespace must be a non-empty string")
             end
 
-            if type(ds.secret.user_key) ~= "string" or ds.secret.user_key == "" then
+            if ds.secret.user_key ~= nil and (type(ds.secret.user_key) ~= "string" or ds.secret.user_key == "") then
                 table.insert(errs, prefix .. ": secret.user_key must be a non-empty string")
             end
 
