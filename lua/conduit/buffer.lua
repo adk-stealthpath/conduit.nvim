@@ -1,4 +1,5 @@
-local exec = require("conduit.exec")
+local exec   = require("conduit.exec")
+local format = require("conduit.format")
 local M = {}
 
 -- keyed by input buffer handle
@@ -42,9 +43,16 @@ local function do_run(in_buf)
     ensure_out_win(s)
     exec.run(s.datasource, s.context, query, function(result)
         vim.schedule(function()
-            local out_lines = result.code ~= 0
-                and vim.split(result.stderr or "unknown error", "\n")
-                or vim.split(result.stdout or "", "\n")
+            local raw, formatter
+            if result.code ~= 0 then
+                raw       = result.stderr or "unknown error"
+                formatter = nil
+            else
+                raw       = result.stdout or ""
+                formatter = s.datasource.formatter
+            end
+            local out_lines, out_ft = format.apply(raw, formatter)
+            vim.bo[s.out_buf].filetype = out_ft or ""
             write_output(s, out_lines)
             vim.api.nvim_win_set_cursor(s.out_win, { 1, 0 })
         end)

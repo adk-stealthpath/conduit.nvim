@@ -1,0 +1,58 @@
+2026-04-29 16:54:20,855 [CRITICAL] configure_logging: 
+    __  __     __               __     __       ___   ____ ___   _____  ____  __ __   ___  ____     ______     ________         ________ __          ___   ____ 
+   / / / /__  / /___ ___  ___  / /_    \ \     |__ \ / __ \__ \ / ___/ / __ \/ // /  |__ \/ __ \   / ____ \   <  / ___/   _    / ____/ // /    _    |__ \ / __ \
+  / /_/ / _ \/ / __ `__ \/ _ \/ __/     \ \    __/ // / / /_/ // __ \ / / / / // /_  __/ / /_/ /  / / __ `/   / / __ \   (_)  /___ \/ // /_   (_)   __/ // / / /
+ / __  /  __/ / / / / / /  __/ /_       / /   / __// /_/ / __// /_/ // /_/ /__  __/ / __/\__, /  / / /_/ /   / / /_/ /  _    ____/ /__  __/  _     / __// /_/ / 
+/_/ /_/\___/_/_/ /_/ /_/\___/\__/      /_/   /____/\____/____/\____(_)____/  /_/ (_)____/____/   \ \__,_/   /_/\____/  (_)  /_____/  /_/    (_)   /____/\____/  
+                                                                                                  \____/                                                        
+
+2026-04-29 16:54:20,855 [CRITICAL] configure_logging:  :::::::::::: Logging started at 2026.04.29 @ 16 : 54 : 20 - Level: DEBUG
+2026-04-29 16:54:20,864 [DEBUG] _poll_range: Range poll requested for 10.10.0.31-10.10.0.131 (canary: 10.10.0.20)
+2026-04-29 16:54:20,866 [INFO] _poll_range: Canary check succeeded for 10.10.0.20, scanning range 10.10.0.31-10.10.0.131
+2026-04-29 16:54:20,866 [INFO] _poll_range: Range --> 10.10.0.{31..131}
+2026-04-29 16:54:26,844 [INFO] _poll_range: Output --> 10.10.0.31
+10.10.0.32
+10.10.0.33
+10.10.0.34
+10.10.0.35
+10.10.0.36
+
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.31
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.32
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.33
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.34
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.35
+2026-04-29 16:54:26,844 [INFO] _poll_range: Live IP detected: 10.10.0.36
+2026-04-29 16:54:26,844 [INFO] _poll_range: Range scan complete: 6 live IPs found
+2026-04-29 16:54:28,895 [INFO] _gather_kubeconfigs: Gathering kubeconfigs from 8 targets
+2026-04-29 16:54:28,897 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-31 (sandurz@10.10.0.31)
+2026-04-29 16:54:28,898 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-32 (sandurz@10.10.0.32)
+2026-04-29 16:54:28,901 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-33 (sandurz@10.10.0.33)
+2026-04-29 16:54:28,906 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-34 (sandurz@10.10.0.34)
+2026-04-29 16:54:28,911 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-35 (sandurz@10.10.0.35)
+2026-04-29 16:54:28,921 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-36 (sandurz@10.10.0.36)
+2026-04-29 16:54:28,931 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from sandurz-device-31 (sandurz@10.10.0.31)
+2026-04-29 16:54:28,940 [DEBUG] _fetch_kubeconfig: Fetching kubeconfig from dark-helmet-local (dark-helmet@10.10.0.20)
+2026-04-29 16:54:29,078 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-32: returncode=255
+2026-04-29 16:54:29,078 [WARNING] _gather_kubeconfigs: Target sandurz-device-32 failed kubeconfig check
+2026-04-29 16:54:29,089 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-33: returncode=255
+2026-04-29 16:54:29,089 [WARNING] _gather_kubeconfigs: Target sandurz-device-33 failed kubeconfig check
+2026-04-29 16:54:29,093 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-34: returncode=255
+2026-04-29 16:54:29,093 [WARNING] _gather_kubeconfigs: Target sandurz-device-34 failed kubeconfig check
+2026-04-29 16:54:29,108 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-31: returncode=255
+2026-04-29 16:54:29,110 [WARNING] _gather_kubeconfigs: Target sandurz-device-31 failed kubeconfig check
+2026-04-29 16:54:29,110 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-36: returncode=255
+2026-04-29 16:54:29,111 [WARNING] _gather_kubeconfigs: Target sandurz-device-36 failed kubeconfig check
+2026-04-29 16:54:29,124 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-31: returncode=255
+2026-04-29 16:54:29,124 [WARNING] _gather_kubeconfigs: Target sandurz-device-31 failed kubeconfig check
+2026-04-29 16:54:29,259 [WARNING] _fetch_kubeconfig: SSH command failed for sandurz-device-35: returncode=1
+2026-04-29 16:54:29,259 [WARNING] _gather_kubeconfigs: Target sandurz-device-35 failed kubeconfig check
+2026-04-29 16:54:29,717 [INFO] _fetch_kubeconfig: Successfully retrieved kubeconfig from dark-helmet-local
+2026-04-29 16:54:29,723 [WARNING] _fetch_kubeconfig: Dummy IP 10.11.0.19 found, replacing with 10.10.0.20
+2026-04-29 16:54:29,728 [INFO] _fetch_kubeconfig: Saved kubeconfig to /home/akingston/.kube/helmet/dark-helmet-local.yaml
+2026-04-29 16:54:29,728 [INFO] _gather_kubeconfigs: Target dark-helmet-local has valid k0s installation
+2026-04-29 16:54:29,728 [INFO] _gather_kubeconfigs: Saved kubeconfig to /home/akingston/.kube/helmet/dark-helmet-local.yaml
+2026-04-29 16:54:29,736 [INFO] _gather_kubeconfigs: Kubeconfig gathering complete: 1/8 targets valid
+2026-04-29 16:54:29,737 [INFO] _build_merged_config: Building merged kubeconfig from 1 targets
+2026-04-29 16:54:29,738 [INFO] _build_merged_config: Removing stale kubeconfig: sandurz-device-41.yaml
+2026-04-29 16:54:29,822 [INFO] _build_merged_config: Saved merged kubeconfig to /home/akingston/.kube/helmet/merged.yaml

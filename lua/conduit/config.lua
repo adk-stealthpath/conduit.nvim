@@ -86,6 +86,14 @@ function M.apply(config)
             table.insert(errs, prefix .. ": filetype must be a non-empty string (hint: filetype = 'sql')")
         end
 
+        if ds.formatter ~= nil then
+            local fmt_t = type(ds.formatter)
+            if fmt_t ~= "string" and fmt_t ~= "function" then
+                table.insert(errs,
+                    prefix .. ": formatter must be a builtin name string ('cypher', 'cypher_table', 'json') or a function")
+            end
+        end
+
         if ds.vars ~= nil and execIsValid then
             if next(ds.vars) == nil then
                 table.insert(errs, prefix .. ": vars must either be nil or a non-empty table")

@@ -6,6 +6,7 @@ function M.run(datasource, context, query, callback)
     local ps = util.resolve(datasource.pod_selector, context)
     sec.get_secret(datasource.secret, context, function(parsed_secret)
         local vars = vim.tbl_extend("force", datasource.vars or {}, parsed_secret)
+--        vim.notify(vim.inspect(vars), vim.log.levels.INFO)
         local kubectl = {
             "kubectl", "--context", context,
             "exec", "--namespace", ps.namespace, ps.name,
