@@ -220,6 +220,12 @@ end
 function M.open(datasource, keyname, context, config)
     vim.cmd("tabnew")
 
+    -- Tag the tabpage with "<context>.<datasource>" (e.g. "schwartz-local.postgres")
+    -- so a tabline (bufferline in the conduit-db appliance) can label the tab by
+    -- its connection instead of the query buffer's unnamed "[No Name]".
+    pcall(vim.api.nvim_tabpage_set_var, 0, "conduit_label",
+        tostring(context) .. "." .. tostring(keyname))
+
     local in_win = vim.api.nvim_get_current_win()
     local in_buf = vim.api.nvim_create_buf(false, true)
     local out_buf = vim.api.nvim_create_buf(false, true)
