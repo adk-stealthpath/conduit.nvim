@@ -28,6 +28,12 @@ function M.open(config)
     table.sort(names)
 
     get_contexts(function(contexts)
+        if vim.tbl_isempty(contexts) then
+            vim.notify(
+                "conduit: no kube contexts found — check KUBECONFIG (`kubectl config get-contexts`)",
+                vim.log.levels.WARN)
+            return
+        end
         pickers.new({}, {
             prompt_title = "conduit: select context",
             finder       = finders.new_table({ results = contexts }),
@@ -35,7 +41,9 @@ function M.open(config)
             attach_mappings = function(prompt_buf, map)
                 actions.select_default:replace(function()
                     actions.close(prompt_buf)
-                    local ctx = astate.get_selected_entry()[1]
+                    local ctx_entry = astate.get_selected_entry()
+                    if not ctx_entry then return end
+                    local ctx = ctx_entry[1]
                     pickers.new({}, {
                         prompt_title = "conduit: select datasource",
                         finder       = finders.new_table({ results = names }),
@@ -43,7 +51,9 @@ function M.open(config)
                         attach_mappings = function(prompt_buf2, _)
                             actions.select_default:replace(function()
                                 actions.close(prompt_buf2)
-                                local name = astate.get_selected_entry()[1]
+                                local ds_entry = astate.get_selected_entry()
+                                if not ds_entry then return end
+                                local name = ds_entry[1]
                                 buffer.open(config.datasources[name], name, ctx, config)
                             end)
                             return true
